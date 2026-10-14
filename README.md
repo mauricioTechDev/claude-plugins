@@ -44,11 +44,6 @@ claude plugin install usage-guard@techdev-plugins
 
 Claude Code then reads each plugin from the clone itself. Run `/reload-plugins` after an edit.
 
-## Keeping personal data out
+## What stays out of git
 
-This repository is meant to be shareable, so nothing in it should identify a person or a machine.
-
-- `scripts/check-pii.sh` looks for email addresses, home-directory paths, phone numbers and common secret formats. It also looks for your own name, email and username, which it reads from your machine each time it runs, so they never have to be written down here.
-- `.githooks/pre-commit` runs that check on every commit. Turn it on once per clone with `git config core.hooksPath .githooks`. The hook also refuses a commit whose author email isn't a GitHub noreply address.
-- `.gitignore` keeps out files Claude Code generates beside a plugin: type files that list your connected tools, and eval results that hold full session traces.
-- Run `scripts/check-pii.sh --all` before changing the repository's visibility.
+`.gitignore` keeps out the files Claude Code generates beside a plugin: type files that list your connected tools, and eval results that hold full session transcripts. Keep credentials and paths tied to one machine out of commits too; a secret scanner such as [gitleaks](https://github.com/gitleaks/gitleaks) catches both.
