@@ -1,0 +1,29 @@
+schema_version: "1.1"
+name: resumes-from-handoff
+description: After the reset, Claude picks up from the saved handoff, finishes the next step and deletes the handoff.
+tags: [resume]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    continue
+
+    [usage-guard] A handoff from an earlier session is saved at handoff.md. If the user wants to continue that work, read it, check the files still match it, continue from its Next steps, and delete it once the work is picked back up. Otherwise ignore it.
+  max_turns: 12
+  allowed_tools: [Read, Write, Edit, Bash, Glob, Grep, Skill]
+runs: 1
+graders:
+  - type: tool_used
+    name: resumes without loading the skill
+    tool: Skill
+    input_match: usage-guard
+    min: 0
+    max: 0
+  - type: regex
+    name: finishes the next step
+    target: { source: file, path: greet.py }
+    pattern: "Hello, "
+  - type: file_exists
+    name: deletes the used handoff
+    path: handoff.md
+    exists: false

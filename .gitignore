@@ -1,0 +1,10 @@
+# Claude Code writes these beside a loaded mod. The MCP types list the tools you have
+# connected, and the tsconfig only points at the generated types.
+**/.claude-plugin/types/
+plugins/*/tsconfig.json
+
+# Eval runs keep full traces: prompts, local paths and account details.
+**/evals/results/
+
+.DS_Store
+node_modules/

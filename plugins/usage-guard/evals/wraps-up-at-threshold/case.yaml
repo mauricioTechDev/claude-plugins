@@ -1,0 +1,45 @@
+schema_version: "1.1"
+name: wraps-up-at-threshold
+description: With the hook's 95% note in the conversation, Claude saves a handoff and stops instead of starting the task.
+tags: [wrap-up]
+execution:
+  prompt: |
+    Build a small command-line tool in this folder: tally.py reads numbers from stdin, one per line, and prints their sum, mean and max. Add tests in test_tally.py.
+
+    [usage-guard] Your 5-hour limit is at 95.4% (resets 9:10 AM). Wrap up now with the usage-guard skill: reach a safe stopping point, save the handoff to handoff.md, tell the user, and stop. Start no new work. When the user says to continue, delete that file and carry on.
+  max_turns: 12
+  allowed_tools: [Read, Write, Edit, Bash, Glob, Grep, Skill]
+runs: 1
+graders:
+  - type: tool_used
+    name: loads the usage-guard skill
+    tool: Skill
+    input_match: usage-guard
+    min: 1
+    arm: with-only
+  - type: file_exists
+    name: writes the handoff
+    path: handoff.md
+  - type: regex
+    name: handoff lists next steps
+    target: { source: file, path: handoff.md }
+    pattern: "next"
+    flags: i
+  - type: file_exists
+    name: starts no new work
+    path: tally.py
+    exists: false
+  - type: regex
+    name: reply gives the reset time
+    pattern: "9:10"
+  - type: regex
+    name: reply is three lines or fewer
+    pattern: "(?:[^\\n]*\\S[^\\n]*\\n+){3}[^\\n]*\\S"
+    match: not_contains
+  - type: llm
+    name: handoff is usable
+    focus: { source: file, path: handoff.md }
+    criteria: >-
+      The handoff states the goal (a tally.py tool that prints the sum, mean and max of numbers read from stdin, with tests in
+      test_tally.py), says what is done so far, and lists concrete next steps in order that someone could start on without
+      re-investigating.

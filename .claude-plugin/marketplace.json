@@ -1,0 +1,14 @@
+{
+  "name": "techdev-plugins",
+  "owner": { "name": "mauricioTechDev" },
+  "metadata": { "description": "Claude Code plugins: mods, skills and hooks." },
+  "plugins": [
+    {
+      "name": "usage-guard",
+      "source": "./plugins/usage-guard",
+      "description": "Watches your plan's 5-hour and weekly limits at no token cost and has Claude wrap up safely before one runs out.",
+      "version": "0.1.0",
+      "category": "productivity"
+    }
+  ]
+}

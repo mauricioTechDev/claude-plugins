@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "usage-guard",
+  "version": "0.1.0",
+  "description": "Watches your plan's 5-hour and weekly limits at no token cost and has Claude wrap up safely before one runs out.",
+  "author": {
+    "name": "mauricioTechDev"
+  },
+  "userConfig": {
+    "threshold": {
+      "type": "number",
+      "title": "Wrap-up threshold (%)",
+      "description": "When any plan limit reaches this percent, Claude is told to wrap up.",
+      "default": 95
+    },
+    "showStatus": {
+      "type": "boolean",
+      "title": "Show usage under the prompt",
+      "description": "Keep the 5-hour percent and its reset time on screen.",
+      "default": true
+    }
+  }
+}

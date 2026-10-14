@@ -1,0 +1,19 @@
+schema_version: "1.1"
+name: quiet-without-note
+description: With no usage-guard note, Claude just does the task and leaves the skill alone.
+tags: [no-trigger]
+execution:
+  prompt: Create notes.txt containing the single word hello.
+  max_turns: 6
+  allowed_tools: [Read, Write, Edit, Bash, Glob, Grep, Skill]
+runs: 1
+graders:
+  - type: tool_used
+    name: leaves the skill alone
+    tool: Skill
+    input_match: usage-guard
+    min: 0
+    max: 0
+  - type: file_exists
+    name: does the task
+    path: notes.txt
