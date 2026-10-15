@@ -6,6 +6,8 @@ Claude Code plugins, published as the plugin marketplace `techdev-plugins`.
 | --- | --- |
 | [usage-guard](plugins/usage-guard) | Watches your plan's 5-hour and weekly limits at no token cost and has Claude wrap up safely before one runs out. |
 
+![usage-guard's status line under the Claude Code prompt, showing 5h 2% · resets 9:10 AM](docs/usage-guard-status.png)
+
 ## Install
 
 In a Claude Code terminal session:
@@ -20,8 +22,6 @@ Or from a shell:
 claude plugin marketplace add mauricioTechDev/claude-plugins
 claude plugin install usage-guard@techdev-plugins
 ```
-
-The repository is private for now, so these work only for accounts that can read it.
 
 ## Working on a plugin
 
@@ -47,3 +47,7 @@ Claude Code then reads each plugin from the clone itself. Run `/reload-plugins` 
 ## What stays out of git
 
 `.gitignore` keeps out the files Claude Code generates beside a plugin: type files that list your connected tools, and eval results that hold full session transcripts. Keep credentials and paths tied to one machine out of commits too; a secret scanner such as [gitleaks](https://github.com/gitleaks/gitleaks) catches both.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

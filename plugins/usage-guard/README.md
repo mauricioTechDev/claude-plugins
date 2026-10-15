@@ -2,6 +2,18 @@
 
 Keeps a Claude Code session from running into a plan usage limit halfway through a task.
 
+![usage-guard's status line under the Claude Code prompt, showing 5h 2% · resets 9:10 AM](https://raw.githubusercontent.com/mauricioTechDev/claude-plugins/main/docs/usage-guard-status.png)
+
+## Install
+
+In a Claude Code terminal session:
+
+```
+/plugin install usage-guard --marketplace mauricioTechDev/claude-plugins
+```
+
+## What it does
+
 - A mod hook reads the 5-hour and weekly limits Claude Code already receives with every response, so watching them costs no tokens. The 5-hour percent and its reset time stay under the prompt; the weekly figure joins it past 75%.
 - When any limit reaches the threshold (95% by default), it adds one short note telling Claude to wrap up with the `usage-guard` skill, and shows a toast and a notification.
 - The skill gets the work to a safe stopping point without discarding anything, writes a handoff to `~/.claude/handoffs/`, tells you when the limit resets, and stops. Say "continue" after the reset. A new session started in the same folder gets a pointer to the handoff, with the resume steps, on its first prompt.
@@ -36,3 +48,7 @@ From the repository root:
 
 - `claude plugin test plugins/usage-guard` runs the 8 engine tests (no model calls).
 - `claude plugin eval plugins/usage-guard --model haiku --runs 1 --scaffold --allow-tools Write Edit Bash --no-publish` runs the 3 behaviour evals against a no-plugin baseline. Each run is a real session on your plan; on Haiku the suite costs about $0.02.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

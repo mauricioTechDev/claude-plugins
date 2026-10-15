@@ -19,5 +19,7 @@
       "description": "Keep the 5-hour percent and its reset time on screen.",
       "default": true
     }
-  }
+  },
+  "license": "MIT",
+  "repository": "https://github.com/mauricioTechDev/claude-plugins"
 }
